@@ -127,4 +127,50 @@ class PurchaseRequestTest extends TestCase
         $this->request->setLocale('en-nz');
         $this->assertSame('en-nz', $this->request->getLocale());
     }
+
+    public function testInvalidCanadianAddress()
+    {
+        $this->request->setCard(array(
+            'firstName' => 'Test',
+            'lastName' => 'Customer',
+            'billingAddress1' => '1 Some St',
+            'billingAddress2' => 'Suburbia',
+            'billingCity' => 'Toronto',
+            'billingPostcode' => '123 456',
+            'billingState' => 'XYZ',
+            'billingCountry' => 'CA',
+            'billingPhone' => '123456789',
+            'email' => 'me@example.com',
+        ));
+        $data = $this->request->getData();
+        $this->assertSame('1 Some St', $data['bill_to_address_line1']);
+        $this->assertSame('Suburbia', $data['bill_to_address_line2']);
+        $this->assertSame('Toronto', $data['bill_to_address_city']);
+        $this->assertSame('XY', $data['bill_to_address_state']);
+        $this->assertFalse(array_key_exists('bill_to_address_postal_code', $data));
+        $this->assertSame('CA', $data['bill_to_address_country']);
+    }
+
+    public function testInvalidAmericanAddress()
+    {
+        $this->request->setCard(array(
+            'firstName' => 'Test',
+            'lastName' => 'Customer',
+            'billingAddress1' => '1 Some St',
+            'billingAddress2' => 'Suburbia',
+            'billingCity' => 'New York',
+            'billingPostcode' => '123 456',
+            'billingState' => 'XYZ',
+            'billingCountry' => 'US',
+            'billingPhone' => '123456789',
+            'email' => 'me@example.com',
+        ));
+        $data = $this->request->getData();
+        $this->assertSame('1 Some St', $data['bill_to_address_line1']);
+        $this->assertSame('Suburbia', $data['bill_to_address_line2']);
+        $this->assertSame('New York', $data['bill_to_address_city']);
+        $this->assertSame('XY', $data['bill_to_address_state']);
+        $this->assertFalse(array_key_exists('bill_to_address_postal_code', $data));
+        $this->assertSame('US', $data['bill_to_address_country']);
+    }
 }

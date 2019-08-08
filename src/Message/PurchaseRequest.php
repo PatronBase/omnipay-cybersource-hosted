@@ -186,19 +186,37 @@ class PurchaseRequest extends AbstractRequest
         // billing details
         $card = $this->getCard();
         if ($card) {
+            $country = $card->getCountry();
+            $state = $card->getState();
+            $post_code = $card->getPostcode();
+            // US/CA have strict state/post code validators if the fields are present
+            // better set blank here (and filtered out further down) than wrong as can be filled out at gateway end
+            if ($country == 'US' || $country == 'CA') {
+                $state = substr(strtoupper($state), 0, 2);
+                if ($country == 'US') {
+                    if (preg_match('/^[0-9]{5}-[0-9]{4}$/', $post_code) !== 1) {
+                        $post_code = '';
+                    }
+                } elseif ($country == 'CA') {
+                    $post_code = strtoupper($post_code);
+                    // Strictly, CA Post is '/^[ABCEGHJ-NPRSTVXY][0-9][ABCEGHJ-NPRSTV-Z] [0-9][ABCEGHJ-NPRSTV-Z][0-9]$/'
+                    if (preg_match('/^[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$/', $post_code) !== 1) {
+                        $post_code = '';
+                    }
+                }
+            } else {
+                $state = substr($state, 0, 60);
+                $post_code = substr($post_code, 0, 10);
+            }
             $optional_data += array(
                 'bill_to_forename' => $card->getFirstName(),
                 'bill_to_surname' => $card->getLastName(),
                 'bill_to_address_line1' => $card->getAddress1(),
                 'bill_to_address_line2' => $card->getAddress2(),
                 'bill_to_address_city' => $card->getCity(),
-                //alphanumeric,2 [ISO state code; req for US/CA]
-                // @todo should this kind of reformatting (or error) happen in driver, or at merchant end?
-                'bill_to_address_state' => $card->getState(),
-                // alphanumeric,10 [strict format check for US/CA addresses]
-                // @todo should this kind of reformatting (or error) happen in driver, or at merchant end?
-                'bill_to_address_postal_code' => $card->getPostcode(),
-                'bill_to_address_country' => $card->getCountry(),
+                'bill_to_address_state' => $state,
+                'bill_to_address_postal_code' => $post_code,
+                'bill_to_address_country' => $country,
                 'bill_to_email' => $card->getEmail(),
                 'bill_to_phone' => $card->getPhone(),
             );
