@@ -132,6 +132,7 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertFalse($this->response->isRedirect());
         $this->assertSame('1234567890123456789012', $this->response->getTransactionReference());
         $this->assertSame('831000', $this->response->getAuthCode());
+        $this->assertSame('100', $this->response->getReasonCode());
         $this->assertSame('Request was processed successfully.', $this->response->getMessage());
         $this->assertSame('411111xxxxxx1111', $this->response->getCardNumber());
         $this->assertSame('001', $this->response->getCardType());
@@ -194,6 +195,7 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertFalse($this->response->isRedirect());
         $this->assertSame('1234567890123456789012', $this->response->getTransactionReference());
         $this->assertNull($this->response->getAuthCode());
+        $this->assertSame('101', $this->response->getReasonCode());
         $this->assertSame(
             'The request data did not pass the required fields check for this application: [bill_country]',
             $this->response->getMessage()
@@ -237,6 +239,7 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertFalse($this->response->isRedirect());
         $this->assertNull($this->response->getTransactionReference());
         $this->assertNull($this->response->getAuthCode());
+        $this->assertNull($this->response->getReasonCode());
         $this->assertSame('Issuing bank has indicated a fraud alert', $this->response->getMessage());
         $this->assertNull($this->response->getCardNumber());
         $this->assertNull($this->response->getCardType());

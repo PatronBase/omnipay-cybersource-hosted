@@ -75,6 +75,16 @@ class CompletePurchaseResponse extends AbstractResponse
     }
 
     /**
+     * Get the reason code if available.
+     *
+     * @return null|string
+     */
+    public function getReasonCode()
+    {
+        return $this->getKey('reason_code');
+    }
+
+    /**
      * Get the merchant response message if available.
      *
      * @return null|string
