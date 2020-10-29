@@ -249,11 +249,12 @@ class CompletePurchaseResponseTest extends TestCase
     }
 
     /**
-     * @expectedException         Omnipay\Common\Exception\InvalidResponseException
-     * @expectedExceptionMessage  Invalid response from payment gateway (no data)
+     * @doesNotPerformAssertions
      */
     public function testCompletePurchaseInvalidNoParameters()
     {
+        $this->expectException('Omnipay\Common\Exception\InvalidResponseException');
+        $this->expectExceptionMessage('Invalid response from payment gateway (no data)');
         $this->response = new CompletePurchaseResponse(
             $this->getMockRequest(),
             array()
@@ -261,11 +262,12 @@ class CompletePurchaseResponseTest extends TestCase
     }
 
     /**
-     * @expectedException         Omnipay\Common\Exception\InvalidResponseException
-     * @expectedExceptionMessage  Invalid response from payment gateway (no data)
+     * @doesNotPerformAssertions
      */
     public function testCompletePurchaseInvalidNoDecision()
     {
+        $this->expectException('Omnipay\Common\Exception\InvalidResponseException');
+        $this->expectExceptionMessage('Invalid response from payment gateway (no data)');
         $this->response = new CompletePurchaseResponse(
             $this->getMockRequest(),
             array(
@@ -276,11 +278,12 @@ class CompletePurchaseResponseTest extends TestCase
     }
 
     /**
-     * @expectedException         Omnipay\Common\Exception\InvalidResponseException
-     * @expectedExceptionMessage  Invalid response from payment gateway (no data)
+     * @doesNotPerformAssertions
      */
     public function testCompletePurchaseInvalidNoSignatureDefinition()
     {
+        $this->expectException('Omnipay\Common\Exception\InvalidResponseException');
+        $this->expectExceptionMessage('Invalid response from payment gateway (no data)');
         $this->response = new CompletePurchaseResponse(
             $this->getMockRequest(),
             array(
@@ -291,11 +294,12 @@ class CompletePurchaseResponseTest extends TestCase
     }
 
     /**
-     * @expectedException         Omnipay\Common\Exception\InvalidResponseException
-     * @expectedExceptionMessage  Invalid response from payment gateway (no data)
+     * @doesNotPerformAssertions
      */
     public function testCompletePurchaseInvalidNoSignature()
     {
+        $this->expectException('Omnipay\Common\Exception\InvalidResponseException');
+        $this->expectExceptionMessage('Invalid response from payment gateway (no data)');
         $this->response = new CompletePurchaseResponse(
             $this->getMockRequest(),
             array(
@@ -306,27 +310,30 @@ class CompletePurchaseResponseTest extends TestCase
     }
 
     /**
-     * @expectedException         Omnipay\Common\Exception\InvalidResponseException
-     * @expectedExceptionMessage  Invalid response from payment gateway (no data)
+     * @doesNotPerformAssertions
      */
     public function testCompletePurchaseInvalidEmptySignature()
     {
+        $this->expectException('Omnipay\Common\Exception\InvalidResponseException');
+        $this->expectExceptionMessage('Invalid response from payment gateway (no data)');
         $this->response = new CompletePurchaseResponse(
             $this->getMockRequest(),
             array(
                 'decision' => 'ERROR',
                 'signed_field_names' => 'decision',
                 'signature' => '',
-           )
+            )
         );
     }
 
     /**
-     * @expectedException         Omnipay\Common\Exception\InvalidResponseException
-     * @expectedExceptionMessage  Invalid response from payment gateway (signature mismatch)
+     * @doesNotPerformAssertions
      */
     public function testCompletePurchaseInvalidSignature()
     {
+        $this->expectException('Omnipay\Common\Exception\InvalidResponseException');
+        $this->expectExceptionMessage('Invalid response from payment gateway (signature mismatch)');
+
         $this->getMockRequest()->shouldReceive('getSecretKey')->once()->andReturn($this->testSecretKey);
 
         $this->response = new CompletePurchaseResponse(

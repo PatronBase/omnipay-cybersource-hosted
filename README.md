@@ -11,7 +11,7 @@
 
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements CyberSource support for Omnipay. It includes
+processing library for PHP 5.6+. This package implements CyberSource support for Omnipay. It includes
 support for the Secure Acceptance Hosted Checkout (formerly Web/Mobile) version of the gateway.
 
 ## Installation
@@ -22,7 +22,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "PatronBase/omnipay-cybersource-hosted": "~2.0"
+        "PatronBase/omnipay-cybersource-hosted": "~3.0"
     }
 }
 ```

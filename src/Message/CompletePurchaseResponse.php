@@ -44,7 +44,7 @@ class CompletePurchaseResponse extends AbstractResponse
 
     /**
      * Is the response successful?
-     * 
+     *
      * Possible values: 'ACCEPT', 'DECLINE', 'REVIEW', 'ERROR', 'CANCEL'
      *
      * @return boolean
