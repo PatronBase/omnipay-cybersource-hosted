@@ -65,6 +65,16 @@ class CompletePurchaseResponse extends AbstractResponse
     }
 
     /**
+     * Get the merchant-supplied transaction identifier if available.
+     *
+     * @return null|string
+     */
+    public function getTransactionId()
+    {
+        return $this->getKey('req_reference_number');
+    }
+
+    /**
      * Get the authorisation code if available.
      *
      * @return null|string

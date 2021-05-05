@@ -131,6 +131,7 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertTrue($this->response->isSuccessful());
         $this->assertFalse($this->response->isRedirect());
         $this->assertSame('1234567890123456789012', $this->response->getTransactionReference());
+        $this->assertSame('123abc', $this->response->getTransactionId());
         $this->assertSame('831000', $this->response->getAuthCode());
         $this->assertSame('100', $this->response->getReasonCode());
         $this->assertSame('Request was processed successfully.', $this->response->getMessage());
