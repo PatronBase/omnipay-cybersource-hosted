@@ -125,6 +125,48 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
+     * Get the browserScreenHeight field
+     *
+     * @return null|int
+     */
+    public function getBrowserScreenHeight()
+    {
+        return $this->getParameter('browserScreenHeight');
+    }
+
+    /**
+     * Set the browserScreenHeight field
+     *
+     * @param null|int $value
+     * @return self
+     */
+    public function setBrowserScreenHeight($value)
+    {
+        return $this->setParameter('browserScreenHeight', $value);
+    }
+
+    /**
+     * Get the browserScreenWidth field
+     *
+     * @return null|int
+     */
+    public function getBrowserScreenWidth()
+    {
+        return $this->getParameter('browserScreenWidth');
+    }
+
+    /**
+     * Set the browserScreenWidth field
+     *
+     * @param null|int $value
+     * @return self
+     */
+    public function setBrowserScreenWidth($value)
+    {
+        return $this->setParameter('browserScreenWidth', $value);
+    }
+
+    /**
      * Get the transaction type
      *
      * Can be one of:
@@ -175,6 +217,8 @@ class PurchaseRequest extends AbstractRequest
         // optional fields
         $optional_data = array(
             'customer_ip_address' => $this->getClientIp(),
+            'customer_browser_screen_height' => $this->getBrowserScreenHeight(),
+            'customer_browser_screen_width' => $this->getBrowserScreenWidth(),
             // merchant defined data 1-4 are stored with tokens, so transaction-specific data from 5 onwards
             'merchant_defined_data5' => $this->getDescription(),
             'override_backoffice_post_url' => $this->getNotifyUrl(),
